@@ -7,17 +7,16 @@ const REGEX_RANGE_NON_CHINESE = '[A-Za-z0-9~$%^&*-+\\=|!;,.?±]';
 const REGEX_SRC_INTER_SCRIPT = `(?:(${REGEX_RANGE_NON_CHINESE})(${REGEX_RANGE_CHINESE})|(${REGEX_RANGE_CHINESE})(${REGEX_RANGE_NON_CHINESE}))`;
 
 const STYLESHEET = `
-.gadget-autospace{
+.gadget-autospace {
   user-select: none;
   -webkit-user-select: none;
   margin-right: 0.125em;
 }`;
 
 const SELECTOR_OBSERVABLE = [
-  'p', 'b', 'i', 's', 'a',
-  'u', 'h1', 'h2', 'h3',
-  'h4', 'h5', 'div', 'span',
-  'td', 'th', 'small', 'li',
+  'p', 'b', 'i', 's', 'a', 'u', 'h1',
+  'h2', 'h3', 'h4', 'h5', 'div', 'span',
+  'td', 'th', 'small', 'li', 'cite',
 ].join(',');
 const SELECTOR_IGNORE = ['pre', 'code', ':not(:lang(zh))'].join(',');
 
@@ -108,8 +107,6 @@ function addSpaceToElements($container: JQuery) {
     || [...i.childNodes].some((j) => j.nodeType === Node.TEXT_NODE)
   );
   leafElements.forEach((leafElement) => {
-    // leafElement.setAttribute('style', 'border:1px solid #000');
-
     [...leafElement.childNodes].forEach((childNode) => {
       if (childNode instanceof Text) {
         addSpaceInTextNode(leafElement, childNode);
@@ -138,7 +135,8 @@ function main() {
   mw.util.addCSS(STYLESHEET);
 
   addSpaceToElements($('#firstHeading'));
-  ['wikipage.content', 'wikipage.categories'].forEach((i) => {
+  addSpaceToElements($('.skin-vector-2022 #vector-toc'));
+  ['wikipage.content', 'wikipage.categories', 'wikipage.tableOfContents'].forEach((i) => {
     mw.hook(i).add(addSpaceToElements);
   });
 }
