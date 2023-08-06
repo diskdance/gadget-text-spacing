@@ -1,6 +1,6 @@
 {
   "name": "text-autospace",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "MediaWiki gadget to automatically insert inter-script whitespace in articles",
