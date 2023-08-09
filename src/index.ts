@@ -10,12 +10,15 @@ function run($jq: JQuery) {
   });
 }
 
+const SELECTOR = [
+  '.mw-body-header', '#vector-sticky-header',
+  '.skin-vector-2022 #vector-toc', '.mw-footer-container',
+  '.mw-portlet',
+].join(',');
+
 function main() {
   document.title = addSpaceToString(document.title);
-  // Use .mw-page-title-main instead of #firstHeading for Vector 2022 sticky header
-  run($('.mw-page-title-main'));
-  // For Vector 2022 sticky TOC
-  run($('.skin-vector-2022 #vector-toc'));
+  run($(SELECTOR));
   ['wikipage.content', 'wikipage.categories'].forEach((i) => {
     mw.hook(i).add(run);
   });

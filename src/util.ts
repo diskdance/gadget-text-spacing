@@ -1,5 +1,6 @@
 function isInlineHTMLElement(node: Node): node is HTMLElement {
-  return node instanceof HTMLElement && window.getComputedStyle(node).display === 'inline';
+  return node instanceof HTMLElement
+    && window.getComputedStyle(node).display.includes('inline');
 }
 
 function isTextNode(node: Node): node is Text {

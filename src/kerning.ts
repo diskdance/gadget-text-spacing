@@ -1,5 +1,5 @@
 import queueDomMutation from './queue';
-import { getNodeText, isVisible, splitAtIndexes } from './util';
+import { getNodeText, isInlineHTMLElement, isVisible, splitAtIndexes } from './util';
 
 const REGEX_RANGE_CHINESE = '(?:[\\u2E80-\\u2E99\\u2E9B-\\u2EF3\\u2F00-\\u2FD5\\u3005\\u3007\\u3021-\\u3029\\u3038-\\u303B\\u3400-\\u4DBF\\u4E00-\\u9FFF\\uF900-\\uFA6D\\uFA70-\\uFAD9]|\\uD81B[\\uDFE2\\uDFE3\\uDFF0\\uDFF1]|[\\uD840-\\uD868\\uD86A-\\uD86C\\uD86F-\\uD872\\uD874-\\uD879\\uD880-\\uD883][\\uDC00-\\uDFFF]|\\uD869[\\uDC00-\\uDEDF\\uDF00-\\uDFFF]|\\uD86D[\\uDC00-\\uDF38\\uDF40-\\uDFFF]|\\uD86E[\\uDC00-\\uDC1D\\uDC20-\\uDFFF]|\\uD873[\\uDC00-\\uDEA1\\uDEB0-\\uDFFF]|\\uD87A[\\uDC00-\\uDFE0]|\\uD87E[\\uDC00-\\uDE1D]|\\uD884[\\uDC00-\\uDF4A])';
 const REGEX_RANGE_NON_CHINESE = '[A-Za-z0-9~$%^&*-+\\=|!;,.?±]';
@@ -76,9 +76,16 @@ function getNextVisibleSibling(node: Node): HTMLElement | Text | null {
     return getNextVisibleSibling(candidate);
   }
 
-  if (candidate instanceof HTMLElement && !isVisible(candidate)) {
-    // Recursively get this invisible element's next sibling
-    return getNextVisibleSibling(candidate);
+  if (candidate instanceof HTMLElement) {
+    if (!isVisible(candidate)) {
+      // Invisible: recursively get this element's next sibling
+      return getNextVisibleSibling(candidate);
+    }
+
+    if (!isInlineHTMLElement(candidate)) {
+      // Next sibling is not inline, ignore it
+      return null;
+    }
   }
 
   if (candidate instanceof Text && candidate.data.trim() === '') {
@@ -104,12 +111,13 @@ function adjustKerning(element: HTMLElement): void {
   for (const child of childNodes) {
     if (child instanceof Text) {
       const nextSibling = getNextVisibleSibling(child);
-      if (nextSibling === null) {
-        continue;
+
+      let testString = getNodeText(child);
+      if (nextSibling !== null) {
+        // Append first character of next sibling to add kerning at the end
+        testString += getNodeText(nextSibling)[0];
       }
 
-      // Append first character of next sibling to add kerning at the end
-      const testString = getNodeText(child) + getNodeText(nextSibling)[0];
       const indexes: number[] = [];
       // Global regexps are stateful so do initialization in each loop
       const regexTextNodeData = new RegExp(REGEX_STR_INTER_SCRIPT, 'g');
