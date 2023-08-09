@@ -1,6 +1,7 @@
 type DomMutationFunc = (element: Element) => void;
 
 const pendingActions = new WeakMap<Element, DomMutationFunc[]>();
+// Optimization: lazily execute pending actions once an element is visible
 const observer = new IntersectionObserver(onIntersection);
 
 function onIntersection(entries: IntersectionObserverEntry[]): void {

@@ -137,4 +137,9 @@ function adjustKerning(element: HTMLElement): void {
   });
 }
 
-export { getLeafElements, adjustKerning };
+function addSpaceToString(str: string): string {
+  const regex = new RegExp(REGEX_STR_INTER_SCRIPT, 'g');
+  return str.replace(regex, `$1$2${THIN_SPACE}`);
+}
+
+export { getLeafElements, adjustKerning, addSpaceToString };

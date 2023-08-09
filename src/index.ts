@@ -1,16 +1,17 @@
 import '../assets/index.css';
-import { adjustKerning, getLeafElements } from './kerning';
+import { addSpaceToString, adjustKerning, getLeafElements } from './kerning';
 
 function run($jq: JQuery) {
   $jq.each((_, element) => {
     const leaves = getLeafElements(element);
-    leaves.forEach((leave) => {
-      adjustKerning(leave);
+    leaves.forEach((leaf) => {
+      adjustKerning(leaf);
     });
   });
 }
 
 function main() {
+  document.title = addSpaceToString(document.title);
   // Use .mw-page-title-main instead of #firstHeading for Vector 2022 sticky header
   run($('.mw-page-title-main'));
   // For Vector 2022 sticky TOC
