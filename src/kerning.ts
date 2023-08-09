@@ -8,22 +8,27 @@ const REGEX_STR_INTER_SCRIPT = `(?:(${REGEX_RANGE_CHINESE})(?=${REGEX_RANGE_NON_
 const THIN_SPACE = '\u2009';
 
 const SELECTOR_ALLOWED = [
-  'p', 'b', 'i', 's', 'a', 'u', 'h1',
-  'h2', 'h3', 'h4', 'h5', 'div', 'span',
-  'td', 'th', 'small', 'li', 'cite',
-  'figcaption', 'dt', 'dd',
+  'a', 'abbr', 'article', 'aside', 'b',
+  'blockquote', 'button', 'caption', 'center', 'cite',
+  'data', 'dd', 'del', 'details', 'dfn',
+  'div', 'dt', 'em', 'figcaption', 'footer',
+  'h1', 'h2', 'h3', 'h4', 'h5',
+  'header', 'i', 'ins', 'label', 'legend',
+  'li', 'main', 'mark', 'option', 'p',
+  'q', 'ruby', 's', 'section', 'small',
+  'span', 'strong', 'sub', 'summary', 'sup',
+  'td', 'th', 'time', 'u',
 ];
 const SELECTOR_BLOCKED = [
-  'pre', 'code', ':not(:lang(zh))',
+  'code', 'kbd', 'pre', 'rp', 'rt',
+  'samp', 'textarea', 'var',
 ];
 
 // FIXME: Use :is() in the future once it has better browser compatibility
 const SELECTOR = SELECTOR_ALLOWED
-  .map(
-    (allowed) => allowed + SELECTOR_BLOCKED
-      .map((blocked) => `:not(${blocked} *)`) // Not a descendant of blocked elements
-      .join('')
-  )
+  .map((allowed) => `${allowed}:not(${SELECTOR_BLOCKED
+    .map((blocked) => `${blocked} *`) // Not a descendant of blocked elements
+    .join(',')})`)
   .join(',');
 
 function getLeafElements(parent: HTMLElement): HTMLElement[] {
