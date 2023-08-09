@@ -3,11 +3,13 @@ import { defineConfig } from 'rollup';
 import typescript from '@rollup/plugin-typescript';
 import { readFileSync } from 'fs';
 import mwGadget from 'rollup-plugin-mediawiki-gadget';
+import css from 'rollup-plugin-import-css';
 
 export default defineConfig({
   input: 'src/index.ts',
   output: {
-    file: 'dist/Gadget-text-autospace.js',
+    file: 'dist/Gadget-zh-kerning.js',
+    assetFileNames: '[name][extname]',
     format: 'iife',
     inlineDynamicImports: true,
     banner: readFileSync('./assets/intro.js').toString().trim(),
@@ -15,6 +17,7 @@ export default defineConfig({
   },
   plugins: [
     typescript(),
+    css(),
     mwGadget({
       gadgetDef: '.gadgetdefinition',
     }),

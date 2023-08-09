@@ -34,6 +34,9 @@ devDependencies:
   rollup:
     specifier: ^3.27.2
     version: 3.27.2
+  rollup-plugin-import-css:
+    specifier: ^3.3.1
+    version: 3.3.1(rollup@3.27.2)
   rollup-plugin-mediawiki-gadget:
     specifier: ^1.0.7
     version: 1.0.7
@@ -934,6 +937,16 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
+    dev: true
+
+  /rollup-plugin-import-css@3.3.1(rollup@3.27.2):
+    resolution: {integrity: sha512-/v/OjjDPhhhbua5w4VzHRTtqfyyG950jJSObtM9os5ELGgaHiolNOvpZNk2KeTSFMuhdrXirGXM64bluHgwySA==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      rollup: ^2.x.x || ^3.x.x
+    dependencies:
+      '@rollup/pluginutils': 5.0.2(rollup@3.27.2)
+      rollup: 3.27.2
     dev: true
 
   /rollup-plugin-mediawiki-gadget@1.0.7:

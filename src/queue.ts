@@ -1,4 +1,6 @@
-const pendingActions = new WeakMap<Element, Array<() => void>>();
+type DomMutationFunc = (element: Element) => void;
+
+const pendingActions = new WeakMap<Element, DomMutationFunc[]>();
 const observer = new IntersectionObserver(onIntersection);
 
 function onIntersection(entries: IntersectionObserverEntry[]): void {
@@ -14,14 +16,14 @@ function onIntersection(entries: IntersectionObserverEntry[]): void {
           if (callback === undefined) {
             break;
           }
-          callback();
+          callback(element);
         }
       }
     }
   });
 }
 
-function scheduleDomMutation(element: Element, callback: () => void) {
+function queueDomMutation(element: Element, callback: DomMutationFunc): void {
   if (!pendingActions.has(element)) {
     pendingActions.set(element, []);
   }
@@ -30,4 +32,4 @@ function scheduleDomMutation(element: Element, callback: () => void) {
   observer.observe(element);
 }
 
-export default scheduleDomMutation;
+export default queueDomMutation;

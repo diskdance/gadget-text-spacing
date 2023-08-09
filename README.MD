@@ -1,6 +1,6 @@
-# 自动空格小工具
+# 优化中文混排字距小工具
 
-本 MediaWiki 小工具会自动在中文和英文、中文和数字之间添加空白，以符合 [W3C 中文排版要求](https://www.w3.org/TR/clreq/#mixed_text_composition_in_horizontal_writing_mode)，使排版更美观。
+本 MediaWiki 小工具借助 JavaScript 自动在中文和英文或数字混排时优化字距，以符合 [W3C 中文排版要求](https://www.w3.org/TR/clreq/#mixed_text_composition_in_horizontal_writing_mode)，使排版更美观。
 
 ## 协议
 

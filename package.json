@@ -1,10 +1,10 @@
 {
-  "name": "text-autospace",
-  "version": "1.0.1",
+  "name": "gadget-zh-kerning",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "MediaWiki gadget to automatically insert inter-script whitespace in articles",
-  "repository": "github:wikimedia-gadgets/mw-text-autospace",
+  "description": "Adjust kerning between Chinese and other scripts automatically",
+  "repository": "github:wikimedia-gadgets/gadget-zh-kerning",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "rollup -c",
@@ -20,6 +20,7 @@
     "@typescript-eslint/parser": "^6.2.1",
     "eslint": "^8.46.0",
     "rollup": "^3.27.2",
+    "rollup-plugin-import-css": "^3.3.1",
     "rollup-plugin-mediawiki-gadget": "^1.0.7",
     "types-mediawiki": "^1.4.0",
     "typescript": "^5.1.6"
