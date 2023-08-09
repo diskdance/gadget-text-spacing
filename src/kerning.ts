@@ -5,17 +5,18 @@ const REGEX_RANGE_CHINESE = '(?:[\\u2E80-\\u2E99\\u2E9B-\\u2EF3\\u2F00-\\u2FD5\\
 const REGEX_RANGE_NON_CHINESE = '[A-Za-z0-9~$%^&*-+\\=|!;,.?±]';
 const REGEX_STR_INTER_SCRIPT = `(?:(${REGEX_RANGE_CHINESE})(?=${REGEX_RANGE_NON_CHINESE})|(${REGEX_RANGE_NON_CHINESE})(?=${REGEX_RANGE_CHINESE}))`;
 
-// TODO
 const THIN_SPACE = '\u2009';
 
 const SELECTOR_ALLOWED = [
   'p', 'b', 'i', 's', 'a', 'u', 'h1',
   'h2', 'h3', 'h4', 'h5', 'div', 'span',
-  'td', 'th', 'small', 'li', 'cite', 'figcaption',
+  'td', 'th', 'small', 'li', 'cite',
+  'figcaption', 'dt', 'dd',
 ];
 const SELECTOR_BLOCKED = [
   'pre', 'code', ':not(:lang(zh))',
 ];
+
 // FIXME: Use :is() in the future once it has better browser compatibility
 const SELECTOR = SELECTOR_ALLOWED
   .map(
