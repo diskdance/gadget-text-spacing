@@ -106,7 +106,7 @@ function createSpacingWrapper(str: string): [string, HTMLSpanElement] {
 function adjustSpacing(element: HTMLElement): void {
   // Freeze NodeList in advance
   const childNodes = [...element.childNodes];
-  const textKerningPosMap = new Map<Text, number[]>();
+  const textSpacingPosMap = new Map<Text, number[]>();
 
   for (const child of childNodes) {
     if (child instanceof Text) {
@@ -130,13 +130,13 @@ function adjustSpacing(element: HTMLElement): void {
         indexes.push(match.index + 1); // +1 to match script boundary
       }
 
-      textKerningPosMap.set(child, indexes);
+      textSpacingPosMap.set(child, indexes);
     }
   }
 
   // Schedule DOM mutation to prevent forced reflow
   queueDomMutation(element, () => {
-    for (const [node, indexes] of textKerningPosMap) {
+    for (const [node, indexes] of textSpacingPosMap) {
       const text = node.data;
       const fragments = splitAtIndexes(text, indexes);
 
