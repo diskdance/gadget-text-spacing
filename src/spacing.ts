@@ -7,8 +7,10 @@ const REGEX_STR_INTER_SCRIPT = `(?:(${REGEX_RANGE_CHINESE})(?=${REGEX_RANGE_NON_
 
 const THIN_SPACE = '\u2009';
 
+const WRAPPER_CLASS = 'gadget-space';
+
 const SELECTOR_ALLOWED = [
-  'a', 'abbr', 'article', 'aside', 'b',
+  'a', 'abbr', 'article', 'aside', 'b', 'bdi',
   'blockquote', 'button', 'caption', 'center', 'cite',
   'data', 'dd', 'del', 'details', 'dfn',
   'div', 'dt', 'em', 'figcaption', 'footer',
@@ -43,10 +45,6 @@ function getLeafElements(parent: HTMLElement): HTMLElement[] {
   }
 
   for (const candidate of candidates) {
-    if (!isVisible(candidate)) {
-      continue;
-    }
-
     for (const childNode of candidate.childNodes) {
       if (childNode.nodeType === Node.TEXT_NODE) {
         result.push(candidate);
@@ -98,7 +96,7 @@ function getNextVisibleSibling(node: Node): HTMLElement | Text | null {
 
 function createSpacingWrapper(str: string): [string, HTMLSpanElement] {
   const span = document.createElement('span');
-  span.className = 'gadget-space';
+  span.className = WRAPPER_CLASS;
   span.innerText = str.slice(-1);
   return [str.slice(0, -1), span];
 }
@@ -130,6 +128,11 @@ function adjustSpacing(element: HTMLElement): void {
         indexes.push(match.index + 1); // +1 to match script boundary
       }
 
+      if (indexes.length === 0) {
+        // Optimization: skip further steps
+        continue;
+      }
+
       textSpacingPosMap.set(child, indexes);
     }
   }
@@ -156,4 +159,4 @@ function addSpaceToString(str: string): string {
   return str.replace(regex, `$1$2${THIN_SPACE}`);
 }
 
-export { getLeafElements, adjustSpacing, addSpaceToString };
+export { getLeafElements, adjustSpacing, addSpaceToString, WRAPPER_CLASS };

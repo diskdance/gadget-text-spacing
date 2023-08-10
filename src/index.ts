@@ -1,33 +1,43 @@
 import '../assets/index.css';
-import { addSpaceToString, adjustSpacing, getLeafElements } from './spacing';
+import { WRAPPER_CLASS, addSpaceToString, adjustSpacing, getLeafElements } from './spacing';
 
-function run($jq: JQuery) {
-  $jq.each((_, element) => {
-    const leaves = getLeafElements(element);
-    leaves.forEach((leaf) => {
-      adjustSpacing(leaf);
-    });
+function run(element: HTMLElement) {
+  const leaves = getLeafElements(element);
+  leaves.forEach((leaf) => {
+    adjustSpacing(leaf);
   });
 }
 
-const SELECTOR = [
-  '.mw-body-header', '#vector-sticky-header',
-  '.skin-vector-2022 #vector-toc', '.mw-footer-container',
-  '.mw-portlet',
-].join(',');
+const mutationObserver = new MutationObserver((records) => {
+  records.forEach((record) => {
+    if (record.type === 'childList') {
+      const nodes = [...record.addedNodes];
+
+      // Exclude mutations made by ourselves to prevent infinite loops
+      if (!nodes.some((node) =>
+        node instanceof HTMLElement
+        && node.classList.contains(WRAPPER_CLASS)
+      )) {
+        nodes.forEach((node) => {
+          if (node instanceof HTMLElement) {
+            run(node);
+          } else if (node instanceof Text) {
+            const parentElement = node.parentElement;
+            if (parentElement !== null) {
+              run(parentElement);
+            }
+          }
+        });
+      }
+    }
+  });
+});
 
 function main() {
   document.title = addSpaceToString(document.title);
-  run($(SELECTOR));
-  ['wikipage.content', 'wikipage.categories'].forEach((i) => {
-    mw.hook(i).add(run);
-  });
+  // Watch for added nodes
+  mutationObserver.observe(document.body, { subtree: true, childList: true });
+  run(document.body);
 }
 
-// Only runs on article pages
-if (
-  mw.config.get('wgPageContentModel') === 'wikitext'
-  && mw.config.get('wgNamespaceNumber') !== mw.config.get('wgNamespaceIds').special
-) {
-  $(main);
-}
+$(main);
