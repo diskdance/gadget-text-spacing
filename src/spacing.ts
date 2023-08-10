@@ -24,12 +24,17 @@ const SELECTOR_ALLOWED = [
 const SELECTOR_BLOCKED = [
   'code', 'kbd', 'pre', 'rp', 'rt',
   'samp', 'textarea', 'var',
+  // Exclude font icons (e.g. Material Icon)
+  '[aria-hidden="true"]',
 ];
 
 // FIXME: Use :is() in the future once it has better browser compatibility
 const SELECTOR = SELECTOR_ALLOWED
   .map((allowed) => `${allowed}:not(${SELECTOR_BLOCKED
-    .map((blocked) => `${blocked} *`) // Not a descendant of blocked elements
+    .flatMap((blocked) =>
+      // Not include itself if it is a tag selector
+      blocked[0].match(/[a-z]/i) ? `${blocked} *` : [blocked, `${blocked} *`]
+    )
     .join(',')})`)
   .join(',');
 
