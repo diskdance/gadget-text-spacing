@@ -1,10 +1,10 @@
 {
-  "name": "gadget-zh-kerning",
+  "name": "gadget-text-spacing",
   "version": "2.0.1",
   "private": true,
   "type": "module",
-  "description": "Adjust kerning between Chinese and other scripts automatically",
-  "repository": "github:wikimedia-gadgets/gadget-zh-kerning",
+  "description": "Adjust spacing between Chinese and other scripts automatically",
+  "repository": "github:wikimedia-gadgets/gadget-text-spacing",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "rollup -c",

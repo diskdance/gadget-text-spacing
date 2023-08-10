@@ -96,14 +96,14 @@ function getNextVisibleSibling(node: Node): HTMLElement | Text | null {
   return candidate;
 }
 
-function createKerningWrapper(str: string): [string, HTMLSpanElement] {
+function createSpacingWrapper(str: string): [string, HTMLSpanElement] {
   const span = document.createElement('span');
-  span.className = 'gzk-kern';
+  span.className = 'gadget-space';
   span.innerText = str.slice(-1);
   return [str.slice(0, -1), span];
 }
 
-function adjustKerning(element: HTMLElement): void {
+function adjustSpacing(element: HTMLElement): void {
   // Freeze NodeList in advance
   const childNodes = [...element.childNodes];
   const textKerningPosMap = new Map<Text, number[]>();
@@ -114,7 +114,7 @@ function adjustKerning(element: HTMLElement): void {
 
       let testString = getNodeText(child);
       if (nextSibling !== null) {
-        // Append first character of next sibling to add kerning at the end
+        // Append first character to detect script intersection
         testString += getNodeText(nextSibling)[0];
       }
 
@@ -142,7 +142,7 @@ function adjustKerning(element: HTMLElement): void {
 
       const replacement = fragments
         .slice(0, -1)
-        .map((fragment) => createKerningWrapper(fragment))
+        .map((fragment) => createSpacingWrapper(fragment))
         .flat();
       replacement.push(fragments.slice(-1)[0]);
 
@@ -156,4 +156,4 @@ function addSpaceToString(str: string): string {
   return str.replace(regex, `$1$2${THIN_SPACE}`);
 }
 
-export { getLeafElements, adjustKerning, addSpaceToString };
+export { getLeafElements, adjustSpacing, addSpaceToString };

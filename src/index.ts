@@ -1,11 +1,11 @@
 import '../assets/index.css';
-import { addSpaceToString, adjustKerning, getLeafElements } from './kerning';
+import { addSpaceToString, adjustSpacing, getLeafElements } from './spacing';
 
 function run($jq: JQuery) {
   $jq.each((_, element) => {
     const leaves = getLeafElements(element);
     leaves.forEach((leaf) => {
-      adjustKerning(leaf);
+      adjustSpacing(leaf);
     });
   });
 }

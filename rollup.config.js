@@ -8,7 +8,7 @@ import css from 'rollup-plugin-import-css';
 export default defineConfig({
   input: 'src/index.ts',
   output: {
-    file: 'dist/Gadget-zh-kerning.js',
+    file: 'dist/Gadget-text-spacing.js',
     assetFileNames: '[name][extname]',
     format: 'iife',
     inlineDynamicImports: true,
@@ -21,10 +21,5 @@ export default defineConfig({
     mwGadget({
       gadgetDef: '.gadgetdefinition',
     }),
-    /* terser({
-       format: {
-         comments: /(^\*!|nowiki)/i, // Preserve banners & nowiki guards
-       },
-     }), */
   ],
 });
