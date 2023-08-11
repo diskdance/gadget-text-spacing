@@ -26,6 +26,12 @@ const SELECTOR_BLOCKED = [
   'samp', 'textarea', 'var',
   // Elements with this class are excluded
   '.gadget-nospace',
+  // Editable elements
+  '[contenteditable="true"]',
+  // ACE editor content
+  '.ace_editor',
+  // Visual Editor (and 2017 Wikitext Editor) content
+  '.ve-ui-surface',
 ];
 
 // FIXME: Use :is() in the future once it has better browser compatibility
