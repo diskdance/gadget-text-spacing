@@ -39,9 +39,6 @@ const SELECTOR = SELECTOR_ALLOWED
   .join(',');
 
 function getLeafElements(parent: HTMLElement): HTMLElement[] {
-  // Normalize at first so there is no adjacent text nodes
-  parent.normalize();
-
   const candidates = parent.querySelectorAll(SELECTOR) as NodeListOf<HTMLElement>;
   const result: HTMLElement[] = [];
 
