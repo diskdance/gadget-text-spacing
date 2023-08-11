@@ -13,7 +13,8 @@ const mutationObserver = new MutationObserver((records) => {
     if (record.type === 'childList') {
       const nodes = [...record.addedNodes];
 
-      // Exclude mutations made by ourselves to prevent infinite loops
+      // Exclude mutations caused by adjustSpacing() to prevent infinite loops
+      // Typically they will contain nodes with class WRAPPER_CLASS
       if (!nodes.some((node) =>
         node instanceof HTMLElement
         && node.classList.contains(WRAPPER_CLASS)

@@ -35,8 +35,8 @@ const SELECTOR = SELECTOR_ALLOWED
       // Not include itself if it is a tag selector
       blocked[0].match(/[a-z]/i) ? `${blocked} *` : [blocked, `${blocked} *`]
     )
-    .join(',')})`)
-  .join(',');
+    .join()})`)
+  .join();
 
 function getLeafElements(parent: HTMLElement): HTMLElement[] {
   const candidates = parent.querySelectorAll(SELECTOR) as NodeListOf<HTMLElement>;
@@ -59,41 +59,50 @@ function getLeafElements(parent: HTMLElement): HTMLElement[] {
 }
 
 function getNextVisibleSibling(node: Node): HTMLElement | Text | null {
-  const candidate = node.nextSibling;
+  let currentNode = node;
 
-  if (candidate === null) {
-    const parent = node.parentElement;
-    if (parent === null) {
-      // Parent is Document, so no visible sibling
-      return null;
-    }
-    // Bubble up to its parent and get its sibling
-    return getNextVisibleSibling(parent);
-  }
+  // Use loops rather than recursion for better performance
+  while (true) {
+    const candidate = currentNode.nextSibling;
 
-  if (!(candidate instanceof HTMLElement || candidate instanceof Text)) {
-    // Comments, SVGs, etc.: get its sibling as result
-    return getNextVisibleSibling(candidate);
-  }
-
-  if (candidate instanceof HTMLElement) {
-    if (!isVisible(candidate)) {
-      // Invisible: recursively get this element's next sibling
-      return getNextVisibleSibling(candidate);
+    if (candidate === null) {
+      const parent = currentNode.parentElement;
+      if (parent === null) {
+        // Parent is Document, so no visible sibling
+        return null;
+      }
+      // Bubble up to its parent and get its sibling
+      currentNode = parent;
+      continue;
     }
 
-    if (!isInlineHTMLElement(candidate)) {
-      // Next sibling is not inline, ignore it
-      return null;
+    if (!(candidate instanceof HTMLElement || candidate instanceof Text)) {
+      // Comments, SVGs, etc.: get its sibling as result
+      currentNode = candidate;
+      continue;
     }
-  }
 
-  if (candidate instanceof Text && candidate.data.trim() === '') {
-    // Skip empty Text nodes (e.g. line breaks)
-    return getNextVisibleSibling(candidate);
-  }
+    if (candidate instanceof HTMLElement) {
+      if (!isVisible(candidate)) {
+        // Invisible: recursively get this element's next sibling
+        currentNode = candidate;
+        continue;
+      }
 
-  return candidate;
+      if (!isInlineHTMLElement(candidate)) {
+        // Next sibling is not inline, ignore it
+        return null;
+      }
+    }
+
+    if (candidate instanceof Text && candidate.data.trim() === '') {
+      // Skip empty Text nodes (e.g. line breaks)
+      currentNode = candidate;
+      continue;
+    }
+
+    return candidate;
+  }
 }
 
 function createSpacingWrapper(str: string): [string, HTMLSpanElement] {
@@ -149,8 +158,7 @@ function adjustSpacing(element: HTMLElement): void {
 
       const replacement = fragments
         .slice(0, -1)
-        .map((fragment) => createSpacingWrapper(fragment))
-        .flat();
+        .flatMap((fragment) => createSpacingWrapper(fragment));
       replacement.push(fragments.slice(-1)[0]);
 
       node.replaceWith(...replacement);
