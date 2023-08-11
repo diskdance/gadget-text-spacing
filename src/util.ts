@@ -18,6 +18,33 @@ function getNodeText(node: HTMLElement | Text): string {
   return node instanceof HTMLElement ? node.innerText : node.data;
 }
 
+/**
+ * Split a string before an array of indexes.
+ *
+ * For example,
+ * ```
+ * splitAtIndexes('123456789', [3, 5, 7]);
+ * ```
+ * results in
+ * ```
+ * ['123', '45', '67', '89']
+ * ```
+ *
+ * Note that empty string are included:
+ * ```
+ * splitAtIndexes('123456789', [0, 9]);
+ * ```
+ * results in
+ * ```
+ * ['', '123456789', '']
+ * ```
+ *
+ * Indexes that are negative or greater than the length of the string are ignored.
+ *
+ * @param str string to split
+ * @param indexes indexes
+ * @returns splitted string fragments
+ */
 function splitAtIndexes(str: string, indexes: number[]): string[] {
   const result = [];
   const normalizedIndexes = [

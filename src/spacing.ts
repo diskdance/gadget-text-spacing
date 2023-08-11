@@ -24,8 +24,8 @@ const SELECTOR_ALLOWED = [
 const SELECTOR_BLOCKED = [
   'code', 'kbd', 'pre', 'rp', 'rt',
   'samp', 'textarea', 'var',
-  // Exclude font icons (e.g. Material Icon)
-  '[aria-hidden="true"]',
+  // Elements with this class are excluded
+  '.gadget-nospace',
 ];
 
 // FIXME: Use :is() in the future once it has better browser compatibility
@@ -132,6 +132,8 @@ function adjustSpacing(element: HTMLElement): void {
 
       if (indexes.length === 0) {
         // Optimization: skip further steps
+        // Also prevent unnecessary mutation, which will be detected by MutationObserver,
+        // resulting in infinite loops
         continue;
       }
 
