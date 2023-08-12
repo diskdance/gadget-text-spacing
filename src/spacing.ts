@@ -96,7 +96,7 @@ function getNextVisibleSibling(node: Node): HTMLElement | Text | null {
       }
 
       if (!isInlineHTMLElement(candidate)) {
-        // Next sibling is not inline, ignore it
+        // Next sibling is not inline (at next line), so no siblings
         return null;
       }
     }
@@ -130,7 +130,7 @@ function adjustSpacing(element: HTMLElement): void {
       let testString = getNodeText(child);
       if (nextSibling !== null) {
         // Append first character to detect script intersection
-        testString += getNodeText(nextSibling)[0];
+        testString += getNodeText(nextSibling)[0] ?? '';
       }
 
       const indexes: number[] = [];
