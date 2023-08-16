@@ -156,7 +156,7 @@ function adjustSpacing(element: HTMLElement): void {
     }
   }
 
-  // Schedule DOM mutation to prevent forced reflow
+  // Schedule DOM mutation to prevent forced reflows
   queueDomMutation(element, () => {
     for (const [node, indexes] of textSpacingPosMap) {
       const text = node.data;

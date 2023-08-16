@@ -19,15 +19,18 @@ const mutationObserver = new MutationObserver((records) => {
         node instanceof HTMLElement
         && node.classList.contains(WRAPPER_CLASS)
       )) {
-        nodes.forEach((node) => {
-          if (node instanceof HTMLElement) {
-            run(node);
-          } else if (node instanceof Text) {
-            const parentElement = node.parentElement;
-            if (parentElement !== null) {
-              run(parentElement);
+        // Optimization: prevent forced reflows
+        requestAnimationFrame(() => {
+          nodes.forEach((node) => {
+            if (node instanceof HTMLElement) {
+              run(node);
+            } else if (node instanceof Text) {
+              const parentElement = node.parentElement;
+              if (parentElement !== null) {
+                run(parentElement);
+              }
             }
-          }
+          });
         });
       }
     }
