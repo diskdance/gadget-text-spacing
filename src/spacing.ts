@@ -10,7 +10,7 @@ const THIN_SPACE = '\u2009';
 const WRAPPER_CLASS = 'gadget-space';
 
 const SELECTOR_ALLOWED = [
-  'a', 'abbr', 'article', 'aside', 'b', 'bdi',
+  'a', 'abbr', 'article', 'aside', 'b', 'bdi', 'big',
   'blockquote', 'button', 'caption', 'center', 'cite',
   'data', 'dd', 'del', 'details', 'dfn',
   'div', 'dt', 'em', 'figcaption', 'footer',
@@ -18,7 +18,7 @@ const SELECTOR_ALLOWED = [
   'header', 'i', 'ins', 'label', 'legend',
   'li', 'main', 'mark', 'option', 'p',
   'q', 'ruby', 's', 'section', 'small',
-  'span', 'strong', 'sub', 'summary', 'sup',
+  'span', 'strike', 'strong', 'sub', 'summary', 'sup',
   'td', 'th', 'time', 'u',
 ];
 const SELECTOR_BLOCKED = [
