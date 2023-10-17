@@ -1,5 +1,5 @@
 import queueDomMutation from './queue';
-import { getNodeText, isInlineHTMLElement, isVisible, splitAtIndexes } from './util';
+import { getNodeText, isInlineHTMLElement, isTextNode, isVisible, splitAtIndexes } from './util';
 
 const REGEX_RANGE_CHINESE = '(?:[\\u2E80-\\u2E99\\u2E9B-\\u2EF3\\u2F00-\\u2FD5\\u3005\\u3007\\u3021-\\u3029\\u3038-\\u303B\\u3400-\\u4DBF\\u4E00-\\u9FFF\\uF900-\\uFA6D\\uFA70-\\uFAD9]|\\uD81B[\\uDFE2\\uDFE3\\uDFF0\\uDFF1]|[\\uD840-\\uD868\\uD86A-\\uD86C\\uD86F-\\uD872\\uD874-\\uD879\\uD880-\\uD883][\\uDC00-\\uDFFF]|\\uD869[\\uDC00-\\uDEDF\\uDF00-\\uDFFF]|\\uD86D[\\uDC00-\\uDF38\\uDF40-\\uDFFF]|\\uD86E[\\uDC00-\\uDC1D\\uDC20-\\uDFFF]|\\uD873[\\uDC00-\\uDEA1\\uDEB0-\\uDFFF]|\\uD87A[\\uDC00-\\uDFE0]|\\uD87E[\\uDC00-\\uDE1D]|\\uD884[\\uDC00-\\uDF4A])';
 const REGEX_RANGE_NON_CHINESE = '[A-Za-z0-9~$%^&*-+\\=|!;,.?±]';
@@ -10,7 +10,7 @@ const THIN_SPACE = '\u2009';
 const WRAPPER_CLASS = 'gadget-space';
 
 const SELECTOR_ALLOWED = [
-  'a', 'abbr', 'article', 'aside', 'b', 'bdi',
+  'a', 'abbr', 'article', 'aside', 'b', 'bdi', 'big',
   'blockquote', 'button', 'caption', 'center', 'cite',
   'data', 'dd', 'del', 'details', 'dfn',
   'div', 'dt', 'em', 'figcaption', 'footer',
@@ -18,7 +18,7 @@ const SELECTOR_ALLOWED = [
   'header', 'i', 'ins', 'label', 'legend',
   'li', 'main', 'mark', 'option', 'p',
   'q', 'ruby', 's', 'section', 'small',
-  'span', 'strong', 'sub', 'summary', 'sup',
+  'span', 'strike', 'strong', 'sub', 'summary', 'sup',
   'td', 'th', 'time', 'u',
 ];
 const SELECTOR_BLOCKED = [
@@ -54,7 +54,7 @@ function getLeafElements(parent: HTMLElement): HTMLElement[] {
 
   for (const candidate of candidates) {
     for (const childNode of candidate.childNodes) {
-      if (childNode.nodeType === Node.TEXT_NODE) {
+      if (isTextNode(childNode)) {
         result.push(candidate);
         break;
       }
