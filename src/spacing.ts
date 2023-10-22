@@ -10,16 +10,17 @@ const THIN_SPACE = '\u2009';
 const WRAPPER_CLASS = 'gadget-space';
 
 const SELECTOR_ALLOWED = [
-  'a', 'abbr', 'article', 'aside', 'b', 'bdi', 'big',
-  'blockquote', 'button', 'caption', 'center', 'cite',
-  'data', 'dd', 'del', 'details', 'dfn',
-  'div', 'dt', 'em', 'figcaption', 'footer',
-  'h1', 'h2', 'h3', 'h4', 'h5',
-  'header', 'i', 'ins', 'label', 'legend',
-  'li', 'main', 'mark', 'option', 'p',
-  'q', 'ruby', 's', 'section', 'small',
-  'span', 'strike', 'strong', 'sub', 'summary', 'sup',
-  'td', 'th', 'time', 'u',
+  'a', 'abbr', 'article', 'aside', 'b',
+  'bdi', 'big', 'blockquote', 'button',
+  'caption', 'center', 'cite', 'data',
+  'dd', 'del', 'details', 'dfn', 'div',
+  'dt', 'em', 'figcaption', 'footer',
+  'h1', 'h2', 'h3', 'h4', 'h5', 'header',
+  'i', 'ins', 'label', 'legend', 'li',
+  'main', 'mark', 'option', 'p', 'q',
+  'ruby', 's', 'section', 'small', 'span',
+  'strike', 'strong', 'sub', 'summary',
+  'sup', 'td', 'th', 'time', 'u',
 ];
 const SELECTOR_BLOCKED = [
   'code', 'kbd', 'pre', 'rp', 'rt',
@@ -32,6 +33,11 @@ const SELECTOR_BLOCKED = [
   '.ace_editor',
   // Visual Editor (and 2017 Wikitext Editor) content
   '.ve-ui-surface',
+  // Diff sources
+  '.ve-init-mw-diffPage-diff',
+  '.diff-side-deleted',
+  '.diff-side-added',
+  '[class*="mw-diff-inline-"]',
 ];
 
 // FIXME: Use :is() in the future once it has better browser compatibility
