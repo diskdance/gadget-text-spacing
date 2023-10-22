@@ -34,10 +34,10 @@ const SELECTOR_BLOCKED = [
   // Visual Editor (and 2017 Wikitext Editor) content
   '.ve-ui-surface',
   // Diff sources
-  '.ve-init-mw-diffPage-diff',
-  '.diff-side-deleted',
+  '.ve-init-mw-diffPage-diff', // VE
+  '.diff-side-deleted', // Wikitext
   '.diff-side-added',
-  '[class*="mw-diff-inline-"]',
+  '[class*="mw-diff-inline-"]', // Wikitext inline mode
 ];
 
 // FIXME: Use :is() in the future once it has better browser compatibility
