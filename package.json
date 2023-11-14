@@ -1,6 +1,6 @@
 {
   "name": "gadget-text-spacing",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "private": true,
   "type": "module",
   "description": "Adjust spacing between Chinese and other scripts automatically",
