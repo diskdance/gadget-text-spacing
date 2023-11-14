@@ -5,7 +5,7 @@ const REGEX_RANGE_CHINESE = '(?:[\\u2E80-\\u2E99\\u2E9B-\\u2EF3\\u2F00-\\u2FD5\\
 const REGEX_RANGE_NON_CHINESE = '[A-Za-z0-9~$%^&*-+\\=|!;,.?±]';
 const REGEX_STR_INTER_SCRIPT = `(?:(${REGEX_RANGE_CHINESE})(?=${REGEX_RANGE_NON_CHINESE})|(${REGEX_RANGE_NON_CHINESE})(?=${REGEX_RANGE_CHINESE}))`;
 
-const THIN_SPACE = '\u2009';
+const THIN_SPACE = '\u200A';
 
 const WRAPPER_CLASS = 'gadget-space';
 
