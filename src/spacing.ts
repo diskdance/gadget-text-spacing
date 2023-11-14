@@ -31,13 +31,19 @@ const SELECTOR_BLOCKED = [
   '[contenteditable="true"]',
   // ACE editor content
   '.ace_editor',
-  // Visual Editor (and 2017 Wikitext Editor) content
+  // Visual Editor (and 2017 Wikitext Editor) content & diff
   '.ve-ui-surface',
-  // Diff sources
-  '.ve-init-mw-diffPage-diff', // VE
-  '.diff-side-deleted', // Wikitext
-  '.diff-side-added',
-  '[class*="mw-diff-inline-"]', // Wikitext inline mode
+  '.ve-init-mw-diffPage-diff',
+  // Diff
+  '.diff-context',
+  '.diff-addedline',
+  '.diff-deletedline',
+  // Diff (inline mode)
+  '.mw-diff-inline-added',
+  '.mw-diff-inline-deleted',
+  '.mw-diff-inline-moved',
+  '.mw-diff-inline-changed',
+  '.mw-diff-inline-context',
 ];
 
 // FIXME: Use :is() in the future once it has better browser compatibility
