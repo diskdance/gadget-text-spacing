@@ -5,23 +5,27 @@ const pendingActions = new WeakMap<Element, DomMutationFunc[]>();
 const observer = new IntersectionObserver(onIntersection);
 
 function onIntersection(entries: IntersectionObserverEntry[]): void {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      const element = entry.target;
-      observer.unobserve(element);
-
-      const callbacks = pendingActions.get(element);
-      if (callbacks !== undefined) {
-        while (true) {
-          const callback = callbacks.shift(); // FIFO
-          if (callback === undefined) {
-            break;
-          }
-          callback(element);
-        }
-      }
+  for (const entry of entries) {
+    if (!entry.isIntersecting) {
+      continue;
     }
-  });
+
+    const element = entry.target;
+    observer.unobserve(element);
+
+    const callbacks = pendingActions.get(element);
+    if (callbacks === undefined) {
+      continue;
+    }
+
+    while (true) {
+      const callback = callbacks.shift(); // FIFO
+      if (callback === undefined) {
+        break;
+      }
+      callback(element);
+    }
+  }
 }
 
 function queueDomMutation(element: Element, callback: DomMutationFunc): void {

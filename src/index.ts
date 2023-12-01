@@ -3,38 +3,44 @@ import { WRAPPER_CLASS, addSpaceToString, adjustSpacing, getLeafElements } from 
 
 function run(element: HTMLElement) {
   const leaves = getLeafElements(element);
-  leaves.forEach((leaf) => {
+  for (const leaf of leaves) {
     adjustSpacing(leaf);
-  });
+  }
 }
 
 const mutationObserver = new MutationObserver((records) => {
-  records.forEach((record) => {
-    if (record.type === 'childList') {
-      const nodes = [...record.addedNodes];
-
-      // Exclude mutations caused by adjustSpacing() to prevent infinite loops
-      // Typically they will contain nodes with class WRAPPER_CLASS
-      if (!nodes.some((node) =>
-        node instanceof HTMLElement
-        && node.classList.contains(WRAPPER_CLASS)
-      )) {
-        // Optimization: prevent forced reflows
-        requestAnimationFrame(() => {
-          nodes.forEach((node) => {
-            if (node instanceof HTMLElement) {
-              run(node);
-            } else if (node instanceof Text) {
-              const parentElement = node.parentElement;
-              if (parentElement !== null) {
-                run(parentElement);
-              }
-            }
-          });
-        });
-      }
+  for (const record of records) {
+    if (record.type !== 'childList') {
+      continue;
     }
-  });
+
+    const nodes = [...record.addedNodes];
+
+    // Exclude mutations caused by adjustSpacing() to prevent infinite loops
+    // Typically they will contain nodes with class WRAPPER_CLASS
+    if (
+      nodes.some(
+        (node) =>
+          node instanceof HTMLElement && node.classList.contains(WRAPPER_CLASS)
+      )
+    ) {
+      continue;
+    }
+
+    // Optimization: prevent forced reflows
+    requestAnimationFrame(() => {
+      for (const node of nodes) {
+        if (node instanceof HTMLElement) {
+          run(node);
+        } else if (node instanceof Text) {
+          const { parentElement } = node;
+          if (parentElement !== null) {
+            run(parentElement);
+          }
+        }
+      }
+    });
+  }
 });
 
 function main() {
