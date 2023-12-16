@@ -54,8 +54,8 @@ const SELECTOR = SELECTOR_ALLOWED
       // Not include itself if it is a tag selector
       blocked[0].match(/[a-z]/i) ? `${blocked} *` : [blocked, `${blocked} *`]
     )
-    .join()})`)
-  .join();
+    .join(',')})`)
+  .join(',');
 
 function getLeafElements(parent: HTMLElement): HTMLElement[] {
   const candidates = parent.querySelectorAll(SELECTOR) as NodeListOf<HTMLElement>;
@@ -127,7 +127,7 @@ function getNextVisibleSibling(node: Node): HTMLElement | Text | null {
 function createSpacingWrapper(str: string): [string, HTMLSpanElement] {
   const span = document.createElement('span');
   span.className = WRAPPER_CLASS;
-  span.innerText = str.slice(-1);
+  span.textContent = str.slice(-1);
   return [str.slice(0, -1), span];
 }
 
@@ -137,36 +137,38 @@ function adjustSpacing(element: HTMLElement): void {
   const textSpacingPosMap = new Map<Text, number[]>();
 
   for (const child of childNodes) {
-    if (child instanceof Text) {
-      const nextSibling = getNextVisibleSibling(child);
-
-      let testString = getNodeText(child);
-      if (nextSibling !== null) {
-        // Append first character to detect script intersection
-        testString += getNodeText(nextSibling)[0] ?? '';
-      }
-
-      const indexes: number[] = [];
-      // Global regexps are stateful so do initialization in each loop
-      const regexTextNodeData = new RegExp(REGEX_STR_INTER_SCRIPT, 'g');
-
-      while (true) {
-        const match = regexTextNodeData.exec(testString);
-        if (match === null) {
-          break;
-        }
-        indexes.push(match.index + 1); // +1 to match script boundary
-      }
-
-      if (indexes.length === 0) {
-        // Optimization: skip further steps
-        // Also prevent unnecessary mutation, which will be detected by MutationObserver,
-        // resulting in infinite loops
-        continue;
-      }
-
-      textSpacingPosMap.set(child, indexes);
+    if (!(child instanceof Text)) {
+      continue;
     }
+
+    const nextSibling = getNextVisibleSibling(child);
+
+    let testString = getNodeText(child);
+    if (nextSibling !== null) {
+      // Append first character to detect script intersection
+      testString += getNodeText(nextSibling)[0] ?? '';
+    }
+
+    const indexes: number[] = [];
+    // Global regexps are stateful so do initialization in each loop
+    const regexTextNodeData = new RegExp(REGEX_STR_INTER_SCRIPT, 'g');
+
+    while (true) {
+      const match = regexTextNodeData.exec(testString);
+      if (match === null) {
+        break;
+      }
+      indexes.push(match.index + 1); // +1 to match script boundary
+    }
+
+    if (indexes.length === 0) {
+      // Optimization: skip further steps
+      // Also prevent unnecessary mutation, which will be detected by MutationObserver,
+      // resulting in infinite loops
+      continue;
+    }
+
+    textSpacingPosMap.set(child, indexes);
   }
 
   // Schedule DOM mutation to prevent forced reflows
@@ -178,7 +180,7 @@ function adjustSpacing(element: HTMLElement): void {
       const replacement = fragments
         .slice(0, -1)
         .flatMap((fragment) => createSpacingWrapper(fragment));
-      replacement.push(fragments.slice(-1)[0]);
+      replacement.push(fragments.at(-1) as string);
 
       node.replaceWith(...replacement);
     }

@@ -1,6 +1,8 @@
 function isInlineHTMLElement(node: Node): node is HTMLElement {
-  return node instanceof HTMLElement
-    && window.getComputedStyle(node).display.includes('inline');
+  return (
+    node instanceof HTMLElement &&
+    window.getComputedStyle(node).display.includes('inline')
+  );
 }
 
 function isTextNode(node: Node): node is Text {
@@ -9,9 +11,11 @@ function isTextNode(node: Node): node is Text {
 
 function isVisible(element: Element): boolean {
   const style = window.getComputedStyle(element);
-  return style.display !== 'none'
-    && !['hidden', 'collapse'].includes(style.visibility)
-    && parseFloat(style.opacity) > 0;
+  return (
+    style.display !== 'none' &&
+    !['hidden', 'collapse'].includes(style.visibility) &&
+    Number.parseFloat(style.opacity) > 0
+  );
 }
 
 function getNodeText(node: HTMLElement | Text): string {
