@@ -1,9 +1,9 @@
 // @ts-check
 import { defineConfig } from 'rollup';
 import typescript from '@rollup/plugin-typescript';
-import { readFileSync } from 'fs';
-import mwGadget from 'rollup-plugin-mediawiki-gadget';
 import css from 'rollup-plugin-import-css';
+import mwGadget from 'rollup-plugin-mediawiki-gadget';
+import { readFileSync } from 'fs';
 
 export default defineConfig({
   input: 'src/index.ts',

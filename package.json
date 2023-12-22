@@ -1,10 +1,9 @@
 {
   "name": "gadget-text-spacing",
-  "version": "2.2.6",
+  "version": "2.3.0",
   "private": true,
-  "type": "module",
   "description": "Adjust spacing between Chinese and other scripts automatically",
-  "repository": "github:wikimedia-gadgets/gadget-text-spacing",
+  "type": "module",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "rollup -c",
@@ -12,21 +11,21 @@
   },
   "author": "diskdance",
   "license": "BSD-3-Clause",
-  "devDependencies": {
-    "@rollup/plugin-typescript": "^11.1.2",
-    "@types/jquery": "^3.5.16",
-    "@types/node": "^20.4.7",
-    "@typescript-eslint/eslint-plugin": "^6.2.1",
-    "@typescript-eslint/parser": "^6.2.1",
-    "eslint": "^8.46.0",
-    "rollup": "^3.27.2",
-    "rollup-plugin-import-css": "^3.3.1",
-    "rollup-plugin-mediawiki-gadget": "^1.0.7",
-    "types-mediawiki": "^1.4.0",
-    "typescript": "^5.1.6"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wikimedia-gadgets/gadget-text-spacing.git"
   },
-  "dependencies": {
-    "jquery": "^3.7.0",
-    "tslib": "^2.6.1"
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/jquery": "^3.5.29",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "only-allow": "^1.2.1",
+    "rollup": "^4.9.1",
+    "rollup-plugin-import-css": "^3.3.5",
+    "rollup-plugin-mediawiki-gadget": "^1.2.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
   }
 }
