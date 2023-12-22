@@ -52,13 +52,13 @@ const SELECTOR = SELECTOR_ALLOWED
   .map((allowed) => `${allowed}:not(${SELECTOR_BLOCKED
     .flatMap((blocked) =>
       // Not include itself if it is a tag selector
-      blocked[0].match(/[a-z]/i) ? `${blocked} *` : [blocked, `${blocked} *`]
+      (blocked[0] as string).match(/[a-z]/i) ? `${blocked} *` : [blocked, `${blocked} *`],
     )
     .join(',')})`)
   .join(',');
 
 function getLeafElements(parent: HTMLElement): HTMLElement[] {
-  const candidates = parent.querySelectorAll(SELECTOR) as NodeListOf<HTMLElement>;
+  const candidates = parent.querySelectorAll(SELECTOR);
   const result: HTMLElement[] = [];
 
   if (parent.matches(SELECTOR)) {
@@ -68,7 +68,7 @@ function getLeafElements(parent: HTMLElement): HTMLElement[] {
   for (const candidate of candidates) {
     for (const childNode of candidate.childNodes) {
       if (isTextNode(childNode)) {
-        result.push(candidate);
+        result.push(candidate as HTMLElement);
         break;
       }
     }

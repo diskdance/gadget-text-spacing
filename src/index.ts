@@ -21,7 +21,7 @@ const mutationObserver = new MutationObserver((records) => {
     if (
       nodes.some(
         (node) =>
-          node instanceof HTMLElement && node.classList.contains(WRAPPER_CLASS)
+          node instanceof HTMLElement && node.classList.contains(WRAPPER_CLASS),
       )
     ) {
       continue;

@@ -56,7 +56,7 @@ function splitAtIndexes(str: string, indexes: number[]): string[] {
     ...new Set(
       indexes
         .sort((a, b) => a - b)
-        .filter((i) => i >= 0 && i <= str.length)
+        .filter((i) => i >= 0 && i <= str.length),
     ),
     str.length,
   ];

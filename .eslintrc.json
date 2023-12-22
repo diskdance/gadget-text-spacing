@@ -1,20 +1,28 @@
 {
   "root": true,
-  "env": {
-    "node": true,
-    "browser": true
-  },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended-type-checked"
+  ],
+  "env": {
+    "browser": true,
+    "es2024": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "project": true
+  },
+  "ignorePatterns": ["dist"],
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "extends": ["plugin:@typescript-eslint/disable-type-checked"]
+    }
   ],
   "rules": {
     "semi": "error",
-    "comma-dangle": [
-      "error",
-      "always-multiline"
-    ],
+    "comma-dangle": ["error", "always-multiline"],
     "quotes": [
       "error",
       "single",
@@ -41,17 +49,8 @@
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
-        "argsIgnorePattern": "_",
-        "destructuredArrayIgnorePattern": "_"
+        "varsIgnorePattern": "^_"
       }
     ]
-  },
-  "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint"
-  ],
-  "ignorePatterns": [
-    "node_modules",
-    "dist"
-  ]
+  }
 }

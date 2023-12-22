@@ -1,22 +1,37 @@
 {
   "compilerOptions": {
-    "target": "ES2016",
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "alwaysStrict": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+
+    "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable"
-    ],
     "rootDir": ".",
+
+    "downlevelIteration": true,
+    "newLine": "lf",
     "outDir": "dist",
-    "strict": true,
+    "removeComments": false,
+
+    "esModuleInterop": true,
+    "isolatedModules": true,
+
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "target": "ES2016",
+
     "skipLibCheck": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "node_modules/types-mediawiki"
-  ]
+  "include": ["src/**/*"]
 }
