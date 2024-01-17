@@ -180,7 +180,7 @@ function adjustSpacing(element: HTMLElement): void {
       const replacement = fragments
         .slice(0, -1)
         .flatMap((fragment) => createSpacingWrapper(fragment));
-      replacement.push(fragments.at(-1) as string);
+      replacement.push(fragments.slice(-1)[0]!);
 
       // Optimization: prevent forced reflows
       requestAnimationFrame(() => {
