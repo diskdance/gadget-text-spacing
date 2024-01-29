@@ -4,7 +4,7 @@
 
 效果类似于 CSS Text Level 4 的 `text-autospace` 属性，目前（2023 年 8 月）主流浏览器并未实现该特性。
 
-This MediaWiki gadget uses JavaScript to optimize spacing between Chinese with English and with numbers for better appearance, and to comply with [W3C's Requirements for Chinese Text Layout'](https://www.w3.org/TR/clreq/#mixed_text_composition_in_horizontal_writing_mode).
+This MediaWiki gadget uses JavaScript to optimize spacing between Chinese with English and with numbers for better appearance, and to comply with [W3C's Requirements for Chinese Text Layout](https://www.w3.org/TR/clreq/#mixed_text_composition_in_horizontal_writing_mode).
 
 The gadget works similar to `text-autospace` in CSS Text Level 4, which is not implemented in major browsers as of writing time (Aug 2023).
 
