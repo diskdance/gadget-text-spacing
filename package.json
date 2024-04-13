@@ -18,14 +18,13 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.5",
     "@types/jquery": "^3.5.29",
-    "@typescript-eslint/eslint-plugin": "^6.15.0",
-    "@typescript-eslint/parser": "^6.15.0",
     "eslint": "^8.56.0",
     "only-allow": "^1.2.1",
     "rollup": "^4.9.1",
     "rollup-plugin-import-css": "^3.3.5",
     "rollup-plugin-mediawiki-gadget": "^1.2.0",
     "tslib": "^2.6.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^7.6.0"
   }
 }
