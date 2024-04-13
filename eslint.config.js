@@ -5,11 +5,23 @@ import tsEslint from 'typescript-eslint';
 
 export default tsEslint.config(
   eslint.configs.recommended,
-  ...tsEslint.configs.recommended,
+  ...tsEslint.configs.recommendedTypeChecked,
   {
     ignores: [
       'dist/',
+      'assets/',
     ],
+  },
+  {
+    languageOptions: {
+      parserOptions: {
+        project: true,
+      },
+    },
+  },
+  {
+    files: ['*.js'],
+    ...tsEslint.configs.disableTypeChecked,
   },
   {
     rules: {
