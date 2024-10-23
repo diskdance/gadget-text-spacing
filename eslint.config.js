@@ -20,7 +20,7 @@ export default tsEslint.config(
     },
   },
   {
-    files: ['*.js'],
+    files: ['**/*.js'],
     ...tsEslint.configs.disableTypeChecked,
   },
   {
